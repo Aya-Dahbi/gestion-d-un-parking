@@ -1,0 +1,547 @@
+
+:root {
+    --bleu:        #2563eb;   /* bleu principal (boutons, liens actifs) */
+    --bleu-fonce:  #1d4ed8;   /* bleu au survol des boutons */
+    --bleu-clair:  #eff6ff;   /* fond bleu très pâle (avatar) */
+    --vert:        #16a34a;   /* texte des places libres */
+    --vert-clair:  #ecfdf5;   /* fond des places libres */
+    --vert-bord:   #bbf7d0;   /* bordure des places libres */
+    --rouge:       #ef4444;   /* texte des places occupées */
+    --rouge-clair: #fef2f2;   /* fond des places occupées */
+    --rouge-bord:  #fecaca;   /* bordure des places occupées */
+    --texte:       #0f172a;   /* texte principal (presque noir) */
+    --gris:        #64748b;   /* texte secondaire */
+    --bord:        #e2e8f0;   /* couleur des bordures */
+    --fond:        #f8fafc;   /* fond gris très clair de la page */
+}
+
+
+
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* même police que la page login */
+    background: var(--fond);
+    color: var(--texte);
+}
+
+
+a { text-decoration: none; color: inherit; }
+
+
+
+.topbar {
+    display: flex;             
+    align-items: center;        
+    gap: 40px;                 
+    padding: 14px 60px;         
+    background: white;
+    border-bottom: 1px solid var(--bord);  
+}
+
+.logo {
+    display: flex;              
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;           
+    font-size: 18px;
+}
+
+.logo-box {
+    background: var(--bleu);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;        
+}
+
+.menu {
+    display: flex;
+    gap: 28px;
+    flex: 1;                    
+}
+
+.menu a {
+    color: var(--gris);
+    font-size: 14px;
+    padding: 8px 0;
+}
+
+
+.menu a.active {
+    color: var(--bleu);
+    font-weight: 600;
+    border-bottom: 2px solid var(--bleu);
+}
+
+.profil { display: flex; align-items: center; gap: 10px; }
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--bleu-clair);
+    color: var(--bleu);
+    font-weight: 700;
+   
+    display: flex;
+    align-items: center;        
+    justify-content: center;   
+}
+
+.profil-texte {
+    display: flex;
+    flex-direction: column;     /* les enfants l'un SOUS l'autre (nom puis lien) */
+    font-size: 13px;
+}
+.profil-texte a { color: var(--gris); font-size: 12px; }
+.profil-texte a:hover { color: var(--rouge); }   /* :hover = quand la souris est dessus */
+
+
+/* ===== 3. TITRE DE LA PAGE =========================================== */
+
+.page {
+    max-width: 1150px;          /* la page ne dépasse jamais 1150px de large */
+    margin: 0 auto;             /* auto à gauche/droite → la page est centrée */
+    padding: 36px 20px;
+}
+
+.page-entete {
+    display: flex;
+    justify-content: space-between;   /* titre collé à gauche, recherche collée à droite */
+    align-items: flex-end;            /* alignés en bas */
+    margin-bottom: 24px;
+}
+
+.surtitre {
+    color: var(--bleu);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;            /* espace entre les lettres */
+    text-transform: uppercase;        /* affiché en MAJUSCULES sans changer le HTML */
+}
+
+h1 { font-size: 26px; margin: 6px 0; }
+
+.sous-titre { color: var(--gris); font-size: 13px; }
+
+.recherche {
+    width: 260px;
+    padding: 10px 14px;
+    border: 1px solid var(--bord);
+    border-radius: 10px;
+    outline: none;                    /* enlève le contour bleu par défaut du navigateur */
+}
+.recherche:focus { border-color: var(--bleu); }   /* :focus = quand on clique dans le champ */
+
+
+/* ===== 4. LES DEUX CARTES CÔTE À CÔTE ================================ */
+
+.contenu {
+    display: grid;                    /* grille = découpage en colonnes */
+    grid-template-columns: 1fr 320px; /* 2 colonnes : gauche = tout l'espace restant (1fr),
+                                         droite = 320px fixes */
+    gap: 20px;                        /* espace entre les colonnes */
+    align-items: start;               /* chaque carte garde sa propre hauteur */
+}
+
+/* Le style commun aux deux cartes blanches */
+.carte {
+    background: white;
+    border: 1px solid var(--bord);
+    border-radius: 16px;
+    padding: 22px;
+}
+
+.carte-entete {
+    display: flex;
+    justify-content: space-between;   /* titre à gauche, légende/badge à droite */
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+h2 { font-size: 18px; margin-top: 4px; }
+
+.legende {
+    list-style: none;                 /* enlève les puces "•" de la liste */
+    display: flex;
+    gap: 14px;
+    font-size: 12px;
+    color: var(--gris);
+}
+.legende li { display: flex; align-items: center; gap: 5px; }
+
+/* Les petits ronds de la légende */
+.pastille {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;               /* 50% → un carré devient un ROND */
+    display: inline-block;            /* un <span> n'a pas de taille sans ça */
+}
+.pastille.libre        { border: 2px solid var(--vert); }    /* rond vide vert */
+.pastille.occupee      { border: 2px solid var(--rouge); }   /* rond vide rouge */
+.pastille.selectionnee { background: var(--bleu); }          /* rond plein bleu */
+
+
+/* ===== 5. LE PLAN DU PARKING ========================================= */
+
+/* Le "sol" gris qui contient les rangées */
+.parking {
+    background: var(--fond);
+    border: 1px solid var(--bord);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* La virgule = on applique les MÊMES règles aux deux sélecteurs */
+.parking-indications,
+.allee {
+    display: flex;
+    justify-content: space-between;   /* un texte à gauche, un à droite (et un au milieu pour l'allée) */
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gris);
+}
+
+.allee { padding: 22px 6px; }         /* de l'espace au-dessus et en dessous = l'allée */
+
+.rangee {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);   /* 8 colonnes de même largeur = 8 places par rangée */
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* --- UNE PLACE : la forme commune à toutes les places --- */
+.place {
+    height: 80px;
+    border-radius: 8px;
+    border: 1px solid;                /* la couleur de la bordure dépend de l'état (plus bas) */
+    display: flex;
+    flex-direction: column;           /* voiture au-dessus, numéro en dessous */
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: transform 0.15s;      /* le mouvement au survol se fait en douceur (0,15 s) */
+}
+
+/* ⭐ Les 3 ÉTATS d'une place. Le JS changera juste la classe ! */
+
+/* État LIBRE → vert, cliquable */
+.place.libre {
+    background: var(--vert-clair);
+    border-color: var(--vert-bord);
+    color: var(--vert);
+    cursor: pointer;                  /* curseur "main" = on peut cliquer */
+}
+.place.libre:hover {
+    transform: translateY(-3px);      /* la place "monte" de 3px au survol */
+    border-color: var(--vert);
+}
+
+/* État OCCUPÉE → rouge, pas cliquable */
+.place.occupee {
+    background: var(--rouge-clair);
+    border-color: var(--rouge-bord);
+    color: var(--rouge);
+    font-size: 22px;                  /* grande taille pour l'emoji voiture 🚗 */
+    cursor: not-allowed;              /* curseur "interdit" */
+}
+.place.occupee span { font-size: 10px; }   /* le numéro reste petit sous la voiture */
+
+/* État SÉLECTIONNÉE → bleu plein avec une ombre */
+.place.selectionnee {
+    background: var(--bleu);
+    border-color: var(--bleu);
+    color: white;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    /* ombre : 0 = pas de décalage horizontal, 6px vers le bas,
+       16px de flou, couleur bleue transparente à 35% */
+}
+
+/* Pied de la carte */
+.carte-pied {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--gris);
+}
+
+.point-vert {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;               /* un petit rond vert = "en direct" */
+    background: var(--vert);
+}
+
+/* Un bouton qui ressemble à un lien (pas de fond, pas de bordure) */
+.lien-bouton {
+    background: none;
+    border: none;
+    color: var(--bleu);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* ===== 6. PANNEAU DE RÉSERVATION (carte de droite) =================== */
+
+.badge {
+    background: var(--vert-clair);
+    color: var(--vert);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.place-choisie { display: flex; align-items: center; gap: 14px; }
+
+/* Le grand carré bleu avec le numéro de la place */
+.place-icone {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: var(--bleu);
+    color: white;
+    font-weight: 700;
+    display: flex;                    /* même astuce de centrage que l'avatar */
+    align-items: center;
+    justify-content: center;
+}
+
+h3 { font-size: 18px; }
+
+/* La ligne de séparation : on enlève le style par défaut et on met une fine bordure */
+hr { border: none; border-top: 1px solid var(--bord); margin: 20px 0; }
+
+h4 { font-size: 14px; margin-bottom: 14px; }
+
+label {
+    display: block;                   /* le label prend toute la ligne → le champ va dessous */
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+    margin: 12px 0 6px;               /* 12px au-dessus, 0 à droite/gauche, 6px en dessous */
+}
+
+/* [type="date"] = sélecteur d'ATTRIBUT : seulement les <input> de type date */
+input[type="date"],
+input[type="time"] {
+    width: 100%;                      /* le champ prend toute la largeur disponible */
+    padding: 10px;
+    border: 1px solid var(--bord);
+    border-radius: 8px;
+    font-family: inherit;             /* même police que le reste de la page */
+    outline: none;
+}
+input[type="date"]:focus,
+input[type="time"]:focus { border-color: var(--bleu); }
+
+.horaires {
+    display: flex;                    /* Début → Fin sur une même ligne */
+    align-items: flex-end;
+    gap: 8px;
+}
+.horaires > div { flex: 1; }          /* > = enfants DIRECTS. Les 2 div se partagent la largeur à égalité */
+.fleche { padding-bottom: 10px; color: var(--gris); }
+
+/* Une ligne "texte à gauche ... valeur à droite" */
+.ligne-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--gris);
+    margin-top: 16px;
+}
+.ligne-info strong { color: var(--texte); }
+
+/* La ligne du total : une bordure au-dessus + le prix en gros et en bleu */
+.ligne-total { border-top: 1px solid var(--bord); padding-top: 14px; }
+.ligne-total strong { color: var(--bleu); font-size: 22px; }
+
+/* Le gros bouton bleu "Réserver cette place" */
+.btn-principal {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px;
+    background: var(--bleu);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-principal:hover    { background: var(--bleu-fonce); }
+/* :disabled = quand le bouton a l'attribut disabled (le JS le désactivera
+   tant qu'aucune place n'est choisie) → gris + curseur interdit */
+.btn-principal:disabled { background: #94a3b8; cursor: not-allowed; }
+
+.note { text-align: center; font-size: 11px; color: var(--gris); margin-top: 10px; }
+
+
+/* ===== 🆕 ÉTAPE 4 : MESSAGE DE RÉSERVATION ============================ */
+
+.message {
+    margin-top: 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+/* :empty = quand la div ne contient AUCUN texte → on la cache */
+.message:empty { display: none; }
+
+/* Message de réussite : vert */
+.message.succes {
+    background: var(--vert-clair);
+    color: var(--vert);
+    border-left: 4px solid var(--vert);
+}
+
+/* Message d'erreur : rouge */
+.message.erreur {
+    background: var(--rouge-clair);
+    color: var(--rouge);
+    border-left: 4px solid var(--rouge);
+}
+
+
+/* ===== 🆕 ÉTAPE 5 : BANDEAU "MA RÉSERVATION" ========================= */
+
+/* Classe utilitaire : cacher un élément. Le JS l'ajoute ou l'enlève. */
+.cache { display: none !important; }
+/* !important = cette règle gagne même si une autre règle dit le contraire
+   (par ex. .bandeau { display: flex }) */
+
+.bandeau {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;                       /* sur petit écran, les blocs passent à la ligne */
+    background: white;
+    border: 1px solid var(--bord);
+    border-left: 4px solid var(--bleu);    /* la barre bleue à gauche de la maquette */
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+}
+
+.bandeau-gauche { display: flex; align-items: center; gap: 14px; }
+
+.bandeau-icone {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--bleu-clair);
+    color: var(--bleu);
+    font-size: 22px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.bandeau-statut {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--vert);
+    display: flex; align-items: center; gap: 6px;
+}
+
+.bandeau-temps {
+    border-left: 1px solid var(--bord);    /* le petit trait vertical de la maquette */
+    padding-left: 24px;
+}
+
+.compte-rebours {
+    font-size: 30px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;    /* chiffres de même largeur → le texte ne "danse" pas */
+}
+
+.bandeau-boutons { display: flex; gap: 10px; }
+
+/* Bouton blanc à bordure rouge : "Annuler la réservation" */
+.btn-secondaire {
+    padding: 12px 18px;
+    background: white;
+    color: var(--rouge);
+    border: 1px solid var(--rouge-bord);
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-secondaire:hover { background: var(--rouge-clair); }
+
+/* .btn-principal fait 100% de large (pour le formulaire).
+   Dans le bandeau, on veut un bouton à sa taille normale. */
+.btn-principal.btn-auto { width: auto; margin-top: 0; padding: 12px 20px; }
+
+/* MA place dans la grille : bleu foncé (maquette 4.3) */
+.place.occupee.mienne {
+    background: #1e3a8a;
+    border-color: #1e3a8a;
+    color: white;
+}
+
+
+/* ===== 7. PETITS ÉCRANS (responsive) =================================
+   @media = "applique ces règles SEULEMENT si..."
+   max-width: 900px → si l'écran fait 900px de large ou moins */
+@media (max-width: 900px) {
+    .topbar { padding: 14px 20px; gap: 20px; }
+    .contenu { grid-template-columns: 1fr; }               /* 1 seule colonne : les cartes l'une sous l'autre */
+    .page-entete { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .rangee { grid-template-columns: repeat(4, 1fr); }     /* 4 places par ligne au lieu de 8 */
+}
+
+/* =====================================================================
+   🆕 ÉTAPE 8 — À AJOUTER dans views/dashboard.css,
+   juste AVANT la section "7. PETITS ÉCRANS"
+   ===================================================================== */
+
+/* La zone qui contient les notifications */
+#zone-notifications {
+    position: fixed;      /* FIXÉE à l'écran : elle reste au même endroit même si on fait défiler la page */
+    right: 20px;          /* à 20px du bord droit */
+    bottom: 20px;         /* à 20px du bas */
+    display: flex;
+    flex-direction: column;   /* les notifications s'empilent les unes sous les autres */
+    gap: 10px;
+    z-index: 1000;        /* z-index = "au-dessus" : la zone passe DEVANT le reste de la page */
+}
+
+/* UNE notification */
+.notification {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    width: 320px;
+    background: white;
+    border: 1px solid var(--bord);
+    border-left: 4px solid var(--bleu);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);   /* ombre → elle "flotte" au-dessus de la page */
+    cursor: pointer;                                   /* on peut cliquer pour la fermer */
+    animation: apparition 0.3s ease-out;               /* elle arrive en glissant (voir @keyframes) */
+}
+
+.notification i { color: var(--bleu); font-size: 18px; margin-top: 2px; }
+.notification strong { display: block; font-size: 13px; margin-bottom: 2px; }
+.notification p { font-size: 12px; color: var(--gris); }
+
+/* @keyframes = une ANIMATION : on décrit le début (from) et la fin (to) */
+@keyframes apparition {
+    from { opacity: 0; transform: translateX(40px); }   /* invisible et décalée de 40px à droite */
+    to   { opacity: 1; transform: translateX(0); }      /* visible et à sa place */
+}

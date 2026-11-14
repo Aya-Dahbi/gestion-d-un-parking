@@ -1,0 +1,179 @@
+/* =====================================================================
+   views/reservations.css  →  LE STYLE propre à "Mes réservations"
+   ---------------------------------------------------------------------
+   ⭐ dashboard.css est chargé AVANT ce fichier : on peut donc utiliser
+   ses variables (var(--bleu)...) et ses classes (.carte, .topbar,
+   .btn-principal, .btn-secondaire, .message...).
+   Ici, on écrit SEULEMENT ce qui est nouveau.
+   ===================================================================== */
+
+
+/* ===== 1. LES 4 STATISTIQUES ======================================== */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);   /* 4 cartes de même largeur */
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.stat strong { font-size: 20px; }
+
+/* Le petit carré coloré avec l'icône */
+.stat-icone {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.stat-icone.bleu   { background: var(--bleu-clair); color: var(--bleu); }
+.stat-icone.vert   { background: var(--vert-clair); color: var(--vert); }
+.stat-icone.orange { background: #fff7ed;           color: #ea580c; }
+.stat-icone.violet { background: #f5f3ff;           color: #7c3aed; }
+
+
+/* ===== 2. LES ONGLETS DE FILTRE ====================================== */
+
+.filtres-barre {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--bord);
+}
+
+.filtres { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.filtre {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--gris);
+    cursor: pointer;
+}
+.filtre:hover { background: var(--fond); }
+
+/* Le compteur gris à côté de chaque onglet */
+.filtre span {
+    background: var(--bord);
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-size: 11px;
+    margin-left: 4px;
+}
+
+/* L'onglet choisi : fond bleu clair, compteur bleu plein */
+.filtre.actif { background: var(--bleu-clair); color: var(--bleu); font-weight: 600; }
+.filtre.actif span { background: var(--bleu); color: white; }
+
+
+/* ===== 3. UNE LIGNE DE RÉSERVATION =================================== */
+
+.ligne-resa {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 12px;
+    border-bottom: 1px solid var(--bord);
+}
+.ligne-resa:last-child { border-bottom: none; }   /* pas de trait sous la dernière ligne */
+
+/* La réservation EN COURS est mise en avant (cadre bleu pâle, comme la maquette) */
+.ligne-resa.en_cours {
+    background: #f8fbff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    margin: 12px 0;
+}
+
+/* Le petit calendrier (jour + mois) */
+.resa-date {
+    width: 52px;
+    text-align: center;
+    border: 1px solid var(--bord);
+    border-radius: 10px;
+    padding: 8px 0;
+    background: white;
+}
+.resa-date strong { display: block; font-size: 16px; }
+.resa-date span   { font-size: 10px; color: var(--gris); text-transform: uppercase; }
+
+/* Le carré avec le numéro de la place */
+.resa-place {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: var(--bleu-clair);
+    color: var(--bleu);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ligne-resa.en_cours .resa-place { background: var(--bleu); color: white; }
+
+.resa-infos { flex: 1; }   /* prend toute la place restante → pousse le prix et le bouton à droite */
+.resa-infos h3 { font-size: 15px; display: flex; align-items: center; gap: 8px; }
+
+/* Le badge de statut */
+.badge-statut {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+.badge-statut.en_cours { background: var(--vert-clair); color: var(--vert); }
+.badge-statut.a_venir  { background: var(--bleu-clair); color: var(--bleu); }
+.badge-statut.terminee { background: var(--fond);       color: var(--gris); }
+
+.resa-prix { text-align: right; min-width: 90px; }
+.resa-prix strong { display: block; }
+
+.resa-action { min-width: 150px; text-align: right; }
+
+/* Le bouton "Réserver à nouveau" : un lien avec un style de bouton bleu clair */
+.btn-lien {
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    color: var(--bleu);
+    font-size: 13px;
+    font-weight: 600;
+}
+.btn-lien:hover { background: var(--bleu-clair); }
+
+/* Message quand la liste est vide */
+.vide { text-align: center; color: var(--gris); padding: 40px 0; }
+
+#message-liste:not(:empty) { margin-bottom: 4px; }
+
+
+/* ===== 4. PETITS ÉCRANS ============================================== */
+@media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }   /* 2 cartes par ligne */
+    .ligne-resa { flex-wrap: wrap; }
+    .resa-action { min-width: 0; }
+}
+
+/* Le lien "Nouvelle réservation" utilise .btn-principal (un style de bouton).
+   Un <a> n'est pas un bouton : on l'aligne avec son icône. */
+.page-entete .btn-principal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
